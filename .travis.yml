@@ -10,12 +10,12 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "YRa6saDbifGArs4AUeMnAiYXM5Thudlkrkwu+c7bvy/pzUzWp0ly9rR7jocGAZuqBR3Ymw9nlVNbKYGmMwVW3YMWGQQvBxsQpDsMP9tWOe9vIzYbsrZyMrflVU+uIIpj8UPpL7Ipq5S8Y6XexXmrrMwdkTddFAv3lKAM03VbaTM="
+   - secure: "Cc5jBdYXQk/bMZ10i76+cMuueyZYxr0EH46ftjL6AU0WOdE22WEH7SZgjp9wdwf642A/oAfrkNQFQmvfaT3TNVXEvOO9mpifPCJ/cN+lVcBApsLIujNBcr48Kx4iropZnbHh6iaqo9FOsTQlrNMNoRCVmCWEr/hjeOoLYEDirsew/dQw4yLy67t+x/IiyaYE5hVKUIRWviYZxpCuVke+FU94bppL7we60Hs4E4EOIRQkx05y/MBal0EabYYqFvdoJEvth2oEuZMVXp7tIo1e0UqgDTsjSPRThSK0eA4avNIIEpXk4XvhwHKpsTdqICOnvdtFsZxuvXXrN8IenMucx5gru3c0piSZnBl10iM7BeKTypto451AvkXW533j7ar4mWjQviRGEkhtXNsVY36mABNKdrlo5dAlLM8C6bt+bSu0T/wxcRcmXsaA6Zlo8Kd1DN5/Dd8O6ROXtxSHWq3Q65HuJkH5oVI+Ucj+tc9DniYPBsf8iPB6EUWntHlA9MQL/SGTqNwWnORHCq2NDnMQMJYjhQiskShRRMFgD/wm/20uHJeh3/AxXlHeZ5lJoZqfLb19xbHSBJ8wSy2XeyqSwdr8wGmPv6i8fUsxJDchLNnljzSohpgOCtf0T+ShDSkbXt66SfCzsUKHwrcSgza+O0neZ3hHOhnthEeHcuFYw/M="
 
 addons:
   coverity_scan:
     project:
-        name: "xsvabens/coverity"
+        name: "sadish-vz/coverity-master"
     notification_email: sadishkumar.x.neelamegam@verizon.com
     build_command_prepend: "cov-configure --java"
     build_command: "ant compile"
