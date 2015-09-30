@@ -1,0 +1,22 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "YRa6saDbifGArs4AUeMnAiYXM5Thudlkrkwu+c7bvy/pzUzWp0ly9rR7jocGAZuqBR3Ymw9nlVNbKYGmMwVW3YMWGQQvBxsQpDsMP9tWOe9vIzYbsrZyMrflVU+uIIpj8UPpL7Ipq5S8Y6XexXmrrMwdkTddFAv3lKAM03VbaTM="
+
+addons:
+  coverity_scan:
+    project:
+        name: "xsvabens/coverity"
+    notification_email: valdemar.svabensky@gmail.com
+    build_command_prepend: "cov-configure --java"
+    build_command: "ant compile"
+    branch_pattern: master
