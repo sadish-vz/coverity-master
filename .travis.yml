@@ -16,7 +16,7 @@ addons:
   coverity_scan:
     project:
         name: "xsvabens/coverity"
-    notification_email: valdemar.svabensky@gmail.com
+    notification_email: sadishkumar.x.neelamegam@verizon.com
     build_command_prepend: "cov-configure --java"
     build_command: "ant compile"
     branch_pattern: master
