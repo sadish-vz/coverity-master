@@ -1,0 +1,281 @@
+/*namespace MSTesting.Test
+{
+    using System;
+    using Xunit;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit2;
+    using Ploeh.AutoFixture.AutoMoq;
+
+    public class xUnitTest
+    {
+        [Fact]
+        public void PassingTest()
+        {
+            Assert.Equal(4, Add(2, 2));
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void MyfirstTheory(int value) {
+            Assert.True(value % 2 == 1);
+            Assert.Equal(5, value);
+        }
+
+        [Theory, AutoData]
+        public void TheoeyTest(int o, int v)
+        {
+            
+            Assert.True(Add(o, v) > 0);
+        }
+        [Theory, AutoData]
+        public void TheoeyTestClass(obj lk)
+        {
+            Assert.Equal(5, lk.TestMethod());
+        }
+
+        public class obj
+        {
+            public int o { get; set; }
+            public int j { get; set; }
+            public string str { get; set; }
+
+            public int TestMethod() => o - j;
+        }
+        public int Add(int h, int f) => h + f;
+
+        public int Get(obj oj) => oj.o;
+    }
+}
+
+namespace ForTestingPurpose
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class Product
+    {
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public decimal Price { get; set; }
+    }
+
+
+    public interface IDiscountHelper
+    {
+        decimal ApplyDiscount(decimal totalParam);
+    }
+    public interface IValueCalculator
+    {
+        decimal ValueProducts(IEnumerable<Product> products);
+    }
+    public class Testing
+    {
+        private Product[] products = {
+new Product {Name = "Kayak", Category = "Watersports", Price = 275M},
+new Product {Name = "Lifejacket", Category = "Watersports", Price = 48.95M},
+new Product {Name = "Soccer ball", Category = "Soccer", Price = 19.50M},
+new Product {Name = "Corner flag", Category = "Soccer", Price = 34.95M}
+        };
+
+    }
+    public class MinimumDiscountHelper : IDiscountHelper
+    {
+        public decimal ApplyDiscount(decimal totalParam)
+        {
+            if (totalParam < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else if (totalParam > 100)
+            {
+                return totalParam * 0.9M;
+            }
+            else if (totalParam >= 10 && totalParam <= 100)
+            {
+                return totalParam - 5;
+            }
+            else {
+                return totalParam;
+            }
+        }
+    }
+
+    public class LinqValueCalculator : IValueCalculator
+    {
+        private IDiscountHelper discounter;
+        public LinqValueCalculator(IDiscountHelper discounterParam)
+        {
+            discounter = discounterParam;
+        }
+        public decimal ValueProducts(IEnumerable<Product> products)
+        {
+            return discounter.ApplyDiscount(products.Sum(p => p.Price));
+        }
+    }
+}
+namespace MoqTesting.Tests
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using ForTestingPurpose;
+    using Moq;
+    using Xunit;
+    public class xUnitTestingPurPose
+    {
+        private Product[] products = {
+new Product {Name = "Kayak", Category = "Watersports", Price = 275M},
+new Product {Name = "Lifejacket", Category = "Watersports", Price = 48.95M},
+new Product {Name = "Soccer ball", Category = "Soccer", Price = 19.50M},
+new Product {Name = "Corner flag", Category = "Soccer", Price = 34.95M}
+};
+        public void Sum_Products_Correctly()
+        {
+            // arrange
+            var discounter = new MinimumDiscountHelper();
+            var target = new LinqValueCalculator(discounter);
+            var goalTotal = products.Sum(e => e.Price);
+            // act
+            var result = target.ValueProducts(products);
+            // assert
+            Assert.Equal(goalTotal, result);
+        }*/
+        /*
+        The problem we face is that the LinqValueCalculator class depends on an implementation of the
+IDiscountHelper interface to operate. In the example, we have used the MinimumDiscountHelper class,
+which presents two different issues.
+
+First, we have made our unit test complex and brittle. In order to create a unit test that works, we
+need to take into account the discount logic in the IDiscountHelper implementation to figure out the
+expected value from the ValueProducts method. The brittleness comes from the fact that our tests will fail
+if the discount logic in the implementation changes.
+
+Second, and most troubling, we have extended the scope of our unit test so that it implicitly includes
+the MinimumDiscountHelper class. When our unit test fails, we will not know if the problem is in the
+LinqValueCalculator or MinimumDiscountHelper class.
+
+Unit tests work best when they are simple and focused, and our current setup does not allow for
+either of these characteristics. 
+        */
+/*
+        public void Sum_Products_Correctly_Moq()
+        {
+            // arrange
+            Mock<IDiscountHelper> mock = new Mock<IDiscountHelper>();
+            mock.Setup(m => m.ApplyDiscount(It.IsAny<decimal>()))
+                .Returns<decimal>(total => total);
+            var target = new LinqValueCalculator(mock.Object);
+            // act
+            var result = target.ValueProducts(products);
+            // assert
+            Assert.Equal(products.Sum(e => e.Price), result);
+        }
+
+    }
+}*/
+
+namespace XunitTesting.Tests
+{
+    using System;
+    using Xunit;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit2;
+    using Ploeh.AutoFixture.AutoMoq;
+    using NUnitTesting.BLL;
+    using NUnitTesting.BLL.Interfaces;
+    using NunitTesting.Controllers;
+    using NunitTesting.Models;
+    using Moq;
+    using System.Web.Mvc;
+    using System.Collections;
+    using UnitTesting.DTO;
+    using System.Collections.Generic;
+    
+
+    public class testclass
+    {
+        private IProduct _prod;
+        private IOrder _ord;
+        public testclass(IProduct prod, IOrder ord)
+        {
+            _prod = prod;
+            _ord = ord;
+        }
+
+        public IList<ProductDTO> Index()
+        {
+            var lst = _prod.Get();
+            return lst;
+        }
+    }
+
+    public sealed class AutoMoqDataAttribute : AutoDataAttribute
+    {
+        public AutoMoqDataAttribute() : base(new Fixture().Customize(new AutoConfiguredMoqCustomization()))
+        { }
+
+    }
+
+
+    public class xUnitTestTest
+    {
+        private readonly Fixture _fixture = new Fixture();
+
+        public xUnitTestTest()
+        {
+            _fixture = (Fixture)new Fixture().Customize(new AutoConfiguredMoqCustomization());
+        }
+        //[Theory]
+        //[AutoMoqData]
+        
+        [Fact]
+        public void TestTestClass()
+        {
+            //var _fixture = new Fixture().Customize(new AutoConfiguredMoqCustomization());
+            _fixture.Register<IProduct>(_fixture.Create<ProductOperation>);
+            _fixture.Create<IOrder>();
+           // _fixture.Register<IOrder>(_fixture.Create<OrderOperation>);
+
+            var sut = _fixture.Create<testclass>();
+            var ar = sut.Index() as List<ProductDTO>;
+            Assert.Equal(4, ar.Count);
+        }
+        [Fact]
+        public void WithoutAutoFeatures()
+        {
+            IProduct prod = new ProductOperation();
+            IOrder ord = new OrderOperation();
+
+            var of = new xUnitTestController(prod, ord);
+            var res = of.Index() as ViewResult;
+            var model = (List<ProductModel>)res.ViewData.Model;
+            Assert.Equal(4, model.Count);
+            Assert.Equal(res.GetType(), typeof(ViewResult));
+        }
+       [Fact]
+       public void SaveTest()
+        {
+            _fixture.Register<IProduct>(_fixture.Create<ProductOperation>);
+            _fixture.Create<IOrder>();
+            //_fixture.Customize<ControllerContext>(c => c.Without(x => x.DisplayMode));
+            //_fixture.Customize<ViewDataDictionary>(c =>c.Without(x => x.ModelMetadata));
+
+            var sut = _fixture.Build<xUnitTestController>().OmitAutoProperties().Create();
+            var ar = sut.Index() as ViewResult;
+            var model = (List<ProductModel>)ar.ViewData.Model;
+            Assert.Equal(4, model.Count);
+        }
+
+        [Theory]
+        [AutoData]
+        public void TestOtherInterFace(ProductModel model)
+        {
+            _fixture.Register<IProduct>(_fixture.Create<ProductOperation>);
+            _fixture.Create<IOrder>();
+
+            var sut = _fixture.Build<xUnitTestController>().OmitAutoProperties().Create();
+            var ar = sut.Create(model) as RedirectToRouteResult;
+            Assert.IsType<RedirectToRouteResult>(ar);
+        }
+    }
+}
