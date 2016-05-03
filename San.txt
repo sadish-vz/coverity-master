@@ -1,4 +1,8 @@
-/*namespace MSTesting.Test
+/*
+/*
+http://stackoverflow.com/questions/2665766/can-visual-studio-2010-test-runner-run-xunit
+*/
+namespace MSTesting.Test
 {
     using System;
     using Xunit;
