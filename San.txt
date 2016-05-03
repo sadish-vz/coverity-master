@@ -1,5 +1,6 @@
 /*
 /*
+http://xunit.github.io/docs/getting-started-desktop.html
 http://stackoverflow.com/questions/2665766/can-visual-studio-2010-test-runner-run-xunit
 */
 namespace MSTesting.Test
